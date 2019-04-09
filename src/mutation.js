@@ -55,7 +55,7 @@ export function createMutation(model) {
         type,
       };
       return o;
-    }),
+    }, {}),
   });
 
   return {
