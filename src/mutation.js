@@ -10,6 +10,8 @@ import floatType from "@vostro/graphql-types/lib/float";
 
 import {Types} from "@vostro/esorm";
 
+import moment from "moment";
+
 export function createMutation(model) {
   const input = new GraphQLInputObjectType({
     name: `EsORM${model.modelName}CreateInput`,
@@ -70,6 +72,8 @@ export function createMutation(model) {
         return Object.keys(data).reduce((o, k) => {
           if ((["id"].concat(model.schema.globalKeys || [])).indexOf(k) > -1) {
             o[k] = fromGlobalId(data[k]).id;
+          } else if (model.schema.mappings[k].type === "date") {
+            o[k] = moment(o[k]).format("YYYY-MM-DDTHH:mm:ssZ");
           } else {
             o[k] = data[k];
           }

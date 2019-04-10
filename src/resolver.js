@@ -142,7 +142,7 @@ export function createResolver(model, options, defaultFindOptions, customEdge, c
       const initOpts = {
         context,
         groups,
-        raw: true,
+        // raw: true,
       };
       let findOptions = Object.assign({gql: {source, args, context, info}}, initOpts, isFunction(defaultFindOptions) ?
         defaultFindOptions(initOpts, {source, args, context, info}) : defaultFindOptions);
@@ -163,15 +163,9 @@ export function createResolver(model, options, defaultFindOptions, customEdge, c
       }
 
 
-      const [fullCount, results] = await Promise.all([
-        model.count(Object.assign({
-          context,
-          query: findOptions.query,
-        }, findOptions)),
-        model.findAll(findOptions),
-      ]);
-
-      const edges = results.map((row, idx) => {
+      const results = await model.findAll(findOptions);
+      const fullCount = results._meta.total; //eslint-disable-line
+      const edges = results.models.map((row, idx) => {
         let startIndex = null;
         if (cursor) {
           startIndex = Number(cursor.index);
