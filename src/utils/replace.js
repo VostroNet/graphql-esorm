@@ -1,4 +1,4 @@
-import Op from "@vostro/inflx/lib/operators";
+// import Op from "@vostro/esorm/lib/operators";
 import {fromGlobalId} from "graphql-relay";
 
 function getProperties(obj) {
@@ -6,7 +6,7 @@ function getProperties(obj) {
 }
 
 
-export function replaceKeyDeep(obj, keyMap = Op) {
+export function replaceKeyDeep(obj, keyMap) {
   return Object.keys(obj).reduce((memo, key)=> {
 
     // determine which key we are going to use
