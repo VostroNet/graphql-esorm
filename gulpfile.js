@@ -36,7 +36,6 @@ gulp.task("compile:publish", gulp.series("lint", () => {
       "plugins": [
         "@babel/plugin-proposal-object-rest-spread",
         "@babel/plugin-proposal-class-properties",
-        "babel-plugin-autobind-class-methods",
       ]
     }))
     .pipe(sourcemaps.write(".", {
@@ -62,12 +61,11 @@ gulp.task("compile", gulp.series("lint", () => {
       "plugins": [
         "@babel/plugin-proposal-object-rest-spread",
         "@babel/plugin-proposal-class-properties",
-        "babel-plugin-autobind-class-methods",
       ]
     }))
     .pipe(sourcemaps.write(".", {
       includeContent: false,
-      sourceRoot: path.resolve(__dirname, "./src/"),
+      sourceRoot: process.env.NODE_ENV === "production" ? "../src/" : path.resolve(__dirname, "./src/"),
     }))
     .pipe(gulp.dest("lib/"));
 }));
